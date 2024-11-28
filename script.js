@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", loadTasks);
 // Add a new task
 addTaskBtn.addEventListener("click", () => {
   const taskText = taskInput.value.trim();
-  const taskDate = dateInput.value;
+  const taskDate = dateInput.value; // Get date in YYYY-MM-DD format
 
   if (!taskText || !taskDate) {
     alert("Por favor, preencha a meta e a data!");
@@ -22,7 +22,7 @@ addTaskBtn.addEventListener("click", () => {
   addTaskToDOM(task);
   saveTaskToLocalStorage(task);
 
-  taskInput.value = ""; // Clear input fields
+  taskInput.value = ""; // Clear inputs
   dateInput.value = "";
 });
 
@@ -49,12 +49,12 @@ function addTaskToDOM(task) {
 }
 
 // Format date to a readable format
-function formatDate(date) {
-  return new Date(date).toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
+function formatDate(dateString) {
+  const [year, month, day] = dateString.split("-");
+  const date = new Date(year, month - 1, day);
+
+  const options = { day: "2-digit", month: "long", year: "numeric" };
+  return date.toLocaleDateString("pt-BR", options);
 }
 
 // Remove task from DOM
